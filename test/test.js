@@ -16,12 +16,42 @@ describe('Max sum problem', function () {
           elements: [2, 4]
         }
       ],
-      expectedChosenElements: [4, 2]
+      expectedChosenElements: [2, 4]
+    },
+    {
+      description: 'Two iterations',
+      collections: [
+        {
+          elements: [1, 4]
+        },
+        {
+          elements: [2, 4]
+        },
+        {
+          elements: [2, 4]
+        }
+      ],
+      expectedChosenElements: [1, 2, 4]
+    },
+    {
+      description: 'Solution not feasible',
+      collections: [
+        {
+          elements: [2, 4]
+        },
+        {
+          elements: [2, 4]
+        },
+        {
+          elements: [2, 4]
+        }
+      ],
+      expectedChosenElements: [2, 4]
     }
   ]
   tests.forEach(function (test) {
     it(test.description, function () {
-      // TODO
+      iterativeGreedy.solve()
     })
   })
 
@@ -33,7 +63,7 @@ describe('Max sum problem', function () {
     }
   }
 
-  function greedyAlgorithm (collectionsToChose, waitingCollections) {
+  function greedyAlgorithm (collectionsToChose, waitingCollections = []) {
     const chosenCollections = []
     const rejectedCollections = []
     var remainingCollections = collectionsToChose
@@ -51,9 +81,9 @@ describe('Max sum problem', function () {
         collection.avaiableElements = collection.avaiableElements.filter(e => e !== chosenElement)
       })
 
-      const resultOfIteration = partition(remainingCollections, col => col.avaiableElements.length)
-      remainingCollections = resultOfIteration[0]
-      resultOfIteration[1].forEach(function (collection) {
+      const [remainingCollectionsInThisIteration, rejectedCollectionsInThisIteration] = partition(remainingCollections, col => col.avaiableElements.length)
+      remainingCollections = remainingCollectionsInThisIteration
+      rejectedCollectionsInThisIteration.forEach(function (collection) {
         rejectedCollections.push(collection)
       })
     }

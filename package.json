@@ -18,5 +18,9 @@
     "lodash.partition": "^4.6.0",
     "mocha": "^3.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash.flatten": "^4.4.0",
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isnumber": "^3.0.3"
+  }
 }
