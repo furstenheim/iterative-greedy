@@ -51,7 +51,7 @@ describe('Max sum problem', function () {
   ]
   tests.forEach(function (test) {
     it(test.description, function () {
-      iterativeGreedy.solve()
+      iterativeGreedy.solve(greedyAlgorithm, test.collections, resetAlgorithm)
     })
   })
 
