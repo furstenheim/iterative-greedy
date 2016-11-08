@@ -4,7 +4,8 @@
   "description": "Generic implementation of iterative greedy algorithm",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "gulp": "gulp"
   },
   "keywords": [
     "algorithm",
@@ -13,14 +14,18 @@
   "author": "Gabriel Fürstenheim <furstenheim@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-spawn-mocha": "^3.1.0",
     "lodash.max": "^4.0.1",
     "lodash.maxby": "^4.6.0",
     "lodash.partition": "^4.6.0",
     "mocha": "^3.1.2"
   },
   "dependencies": {
+    "lodash.clone": "^4.5.0",
     "lodash.flatten": "^4.4.0",
     "lodash.isfunction": "^3.0.8",
-    "lodash.isnumber": "^3.0.3"
+    "lodash.isnumber": "^3.0.3",
+    "lodash.sumby": "^4.6.0"
   }
 }
