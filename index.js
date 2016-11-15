@@ -24,7 +24,6 @@ function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction,
     let iterationScore = 0
     greedyQueue.forEach(function (collection) {
       collection.forEach(function (element) {
-        console.log(element)
         resetFunction.call(element, element)
       })
     })

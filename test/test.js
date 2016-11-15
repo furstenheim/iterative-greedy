@@ -3,6 +3,7 @@ const assert = require('assert')
 const maxBy = require('lodash.maxby')
 const max = require('lodash.max')
 const partition = require('lodash.partition')
+const clone = require('lodash.clone')
 
 describe('Max sum problem', function () {
   const tests = [
@@ -56,32 +57,35 @@ describe('Max sum problem', function () {
   })
 
 
-  function resetAlgorithm (collections) {
-    for (let collection of collections) {
-      collection.avaiableElements = collection.elements
-      collection.chosenElement = null
-    }
+  function resetAlgorithm (collection) {
+    collection.availableElements = collection.elements
+    collection.chosenElement = null
   }
 
-  function greedyAlgorithm (collectionsToChose, waitingCollections = []) {
+  function greedyAlgorithm (collectionsToChoose, waitingCollections = []) {
     const chosenCollections = []
     const rejectedCollections = []
-    var remainingCollections = collectionsToChose
+    var remainingCollections = collectionsToChoose
     while (remainingCollections.length > 0) {
-      const chosenCollection = maxBy(collectionsToChose, col => max(col.availableElements))
+      const chosenCollection = maxBy(remainingCollections, col => max(col.availableElements))
+      if (chosenCollection === undefined) {
+        // This should only be if it was not possible to get to begin with
+        assert.equal(chosenCollections.length, 0, 'This should only happen if collections to choose has nowhere to choose')
+        return {chosen: [], rejected: clone(collectionsToChoose)}
+      }
       remainingCollections = remainingCollections.filter(c => c !== chosenCollection)
       const chosenElement = max(chosenCollection.availableElements)
       chosenCollection.chosenElement = chosenElement
       chosenCollections.push(chosenCollection)
 
       remainingCollections.forEach(function (collection) {
-        collection.avaiableElements = collection.avaiableElements.filter(e => e !== chosenElement)
+        collection.availableElements = collection.availableElements.filter(e => e !== chosenElement)
       })
       waitingCollections.forEach(function (collection) {
-        collection.avaiableElements = collection.avaiableElements.filter(e => e !== chosenElement)
+        collection.availableElements = collection.availableElements.filter(e => e !== chosenElement)
       })
 
-      const [remainingCollectionsInThisIteration, rejectedCollectionsInThisIteration] = partition(remainingCollections, col => col.avaiableElements.length)
+      const [remainingCollectionsInThisIteration, rejectedCollectionsInThisIteration] = partition(remainingCollections, col => col.availableElements.length)
       remainingCollections = remainingCollectionsInThisIteration
       rejectedCollectionsInThisIteration.forEach(function (collection) {
         rejectedCollections.push(collection)
