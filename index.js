@@ -16,6 +16,8 @@ const sumBy = require('lodash.sumby')
  */
 function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction, params = {}) {
   const MAX_NUMBER_OF_ITERATIONS = isNumber(params.MAX_NUMBER_OF_ITERATIONS) ? params.MAX_NUMBER_OF_ITERATIONS : 100
+  // At every loop if we improve the result then we apply serialize function to the result to save a copy
+  const serializeFunction = isFunction(params.serializeFunction) ? params.serializeFunction : cloneDeep
   // In the greedy queue we store all the elements in array in reverse order of execution
   const greedyQueue = [startingData]
   let bestGreedyQueue = []
@@ -49,7 +51,7 @@ function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction,
     if (iterationScore > bestScore) {
       // There must be a better way to store the result
       // Plus the name is a bit tricky, one expects that the algorithm in it pass sets the elements
-      bestGreedyQueue = cloneDeep(greedyQueue)
+      bestGreedyQueue = serializeFunction(greedyQueue)
     }
     if (iterationScore === sumBy(greedyQueue, 'length')) {
       return bestGreedyQueue
