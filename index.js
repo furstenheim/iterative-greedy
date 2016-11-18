@@ -51,7 +51,7 @@ function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction,
     if (iterationScore > bestScore) {
       // There must be a better way to store the result
       // Plus the name is a bit tricky, one expects that the algorithm in it pass sets the elements
-      bestGreedyQueue = serializeFunction(greedyQueue)
+      bestGreedyQueue = serializeFunction(flatten(greedyQueue))
     }
     if (iterationScore === sumBy(greedyQueue, 'length')) {
       return bestGreedyQueue
