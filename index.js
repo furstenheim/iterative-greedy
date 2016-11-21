@@ -35,8 +35,11 @@ function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction,
       iterationScore += chosen.length
       if (chosen.length !== 0) {
         greedyQueue[i] = chosen
+        // end of the queue
         if (i === n - 1) {
-          greedyQueue.push(rejected)
+          if (rejected.length) {
+            greedyQueue.push(rejected)
+          }
         } else {
           greedyQueue[i + 1] = [...greedyQueue[i + 1], ...rejected]
         }
