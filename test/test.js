@@ -1,4 +1,4 @@
-const iterativeGreedy = require('./../index')
+const iterativeGreedy = require('./../dist/index')
 const assert = require('assert')
 const maxBy = require('lodash.maxby')
 const max = require('lodash.max')

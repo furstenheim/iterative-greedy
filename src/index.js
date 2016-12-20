@@ -14,7 +14,7 @@ const sumBy = require('lodash.sumby')
  * @param resetFunction function to be applied to each element at the start of each iteration
  * @param params extra params
  */
-function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction, params = {}) {
+async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction, params = {}) {
   const MAX_NUMBER_OF_ITERATIONS = isNumber(params.MAX_NUMBER_OF_ITERATIONS) ? params.MAX_NUMBER_OF_ITERATIONS : 100
   // At every loop if we improve the result then we apply serialize function to the result to save a copy
   const serializeFunction = isFunction(params.serializeFunction) ? params.serializeFunction : cloneDeep
@@ -31,7 +31,7 @@ function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction,
     })
     const n = greedyQueue.length
     for (let i = n - 1; i >= 0; i--) {
-      const {chosen, rejected} = greedyAlgorithm(greedyQueue[i], flatten(greedyQueue.slice(0, i)))
+      const {chosen, rejected} = await greedyAlgorithm(greedyQueue[i], flatten(greedyQueue.slice(0, i)))
       iterationScore += chosen.length
       if (chosen.length !== 0) {
         greedyQueue[i] = chosen
