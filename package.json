@@ -2,7 +2,7 @@
   "name": "iterative-greedy",
   "version": "0.0.1",
   "description": "Generic implementation of iterative greedy algorithm",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha test",
     "gulp": "gulp",
