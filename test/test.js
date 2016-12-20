@@ -4,6 +4,7 @@ const maxBy = require('lodash.maxby')
 const max = require('lodash.max')
 const partition = require('lodash.partition')
 const clone = require('lodash.clone')
+const filter = require('lodash.filter')
 
 describe('Max sum problem', function () {
   const tests = [
@@ -51,8 +52,12 @@ describe('Max sum problem', function () {
     }
   ]
   tests.forEach(function (test) {
-    it(test.description, function () {
-      iterativeGreedy.solve(greedyAlgorithm, test.collections, resetAlgorithm)
+    it(test.description, function (done) {
+      iterativeGreedy.solve(greedyAlgorithm, test.collections, resetAlgorithm, {serializeFunction (collections) { return collections.map(collection => collection.chosenElement) }})
+        .then(function (result) {
+          assert.deepEqual(filter(result).sort((i, j) => i - j), test.expectedChosenElements)
+          done()
+        }).catch(done)
     })
   })
 
