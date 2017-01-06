@@ -52,6 +52,7 @@ async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFun
       }
     }
     if (iterationScore > bestScore) {
+      bestScore = iterationScore
       // There must be a better way to store the result
       // Plus the name is a bit tricky, one expects that the algorithm in it pass sets the elements
       bestGreedyQueue = serializeFunction(flatten(greedyQueue))
