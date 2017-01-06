@@ -1,6 +1,6 @@
 {
   "name": "iterative-greedy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generic implementation of iterative greedy algorithm",
   "main": "dist/index.js",
   "scripts": {
