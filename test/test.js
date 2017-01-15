@@ -1,10 +1,11 @@
 const iterativeGreedy = require('./../dist/index')
 const assert = require('assert')
-const maxBy = require('lodash.maxby')
-const max = require('lodash.max')
-const partition = require('lodash.partition')
-const clone = require('lodash.clone')
-const filter = require('lodash.filter')
+const _ = require('lodash')
+const maxBy = _.maxBy
+const max = _.max
+const partition = _.partition
+const clone = _.clone
+const filter = _.filter
 
 describe('Max sum problem', function () {
   const tests = [

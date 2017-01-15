@@ -1,10 +1,6 @@
 module.exports = {solve: iterativeGreedyAlgorithm}
 
-const isNumber = require('lodash.isnumber')
-const isFunction = require('lodash.isfunction')
-const flatten = require('lodash.flatten')
-const cloneDeep = require('lodash.clonedeep')
-const sumBy = require('lodash.sumby')
+const _ = require('lodash')
 // TODO add the possibility to own score function
 /**
  *
@@ -15,9 +11,9 @@ const sumBy = require('lodash.sumby')
  * @param params extra params
  */
 async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction, params = {}) {
-  const MAX_NUMBER_OF_ITERATIONS = isNumber(params.MAX_NUMBER_OF_ITERATIONS) ? params.MAX_NUMBER_OF_ITERATIONS : 100
+  const MAX_NUMBER_OF_ITERATIONS = _.isNumber(params.MAX_NUMBER_OF_ITERATIONS) ? params.MAX_NUMBER_OF_ITERATIONS : 100
   // At every loop if we improve the result then we apply serialize function to the result to save a copy
-  const serializeFunction = isFunction(params.serializeFunction) ? params.serializeFunction : cloneDeep
+  const serializeFunction = _.isFunction(params.serializeFunction) ? params.serializeFunction : _.cloneDeep
   // In the greedy queue we store all the elements in array in reverse order of execution
   const greedyQueue = [startingData]
   let bestGreedyQueue = []
@@ -31,7 +27,7 @@ async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFun
     })
     const n = greedyQueue.length
     for (let i = n - 1; i >= 0; i--) {
-      const {chosen, rejected} = await greedyAlgorithm(greedyQueue[i], flatten(greedyQueue.slice(0, i)))
+      const {chosen, rejected} = await greedyAlgorithm(greedyQueue[i], _.flatten(greedyQueue.slice(0, i)))
       iterationScore += chosen.length
       if (chosen.length !== 0) {
         greedyQueue[i] = chosen
@@ -55,9 +51,9 @@ async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFun
       bestScore = iterationScore
       // There must be a better way to store the result
       // Plus the name is a bit tricky, one expects that the algorithm in it pass sets the elements
-      bestGreedyQueue = serializeFunction(flatten(greedyQueue))
+      bestGreedyQueue = serializeFunction(_.flatten(greedyQueue))
     }
-    if (iterationScore === sumBy(greedyQueue, 'length')) {
+    if (iterationScore === _.sumBy(greedyQueue, 'length')) {
       return bestGreedyQueue
     }
   }
