@@ -1,6 +1,6 @@
 {
   "name": "iterative-greedy",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Generic implementation of iterative greedy algorithm",
   "main": "dist/index.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "author": "Gabriel Fürstenheim <furstenheim@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "lodash": "^4.17.4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-plugin-meaningful-logs": "^1.0.2",
@@ -23,8 +24,5 @@
     "gulp-spawn-mocha": "^3.1.0",
     "lodash": "^4.17.4",
     "mocha": "^3.1.2"
-  },
-  "peerDependencies": {
-    "lodash": "^4.17.4"
   }
 }

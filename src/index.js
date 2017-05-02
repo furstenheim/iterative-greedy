@@ -1,6 +1,5 @@
 module.exports = {solve: iterativeGreedyAlgorithm}
 
-const _ = require('lodash')
 // TODO add the possibility to own score function
 /**
  *
@@ -11,9 +10,9 @@ const _ = require('lodash')
  * @param params extra params
  */
 async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFunction, params = {}) {
-  const MAX_NUMBER_OF_ITERATIONS = _.isNumber(params.MAX_NUMBER_OF_ITERATIONS) ? params.MAX_NUMBER_OF_ITERATIONS : 100
+  const MAX_NUMBER_OF_ITERATIONS = (typeof params.MAX_NUMBER_OF_ITERATIONS === 'number') ? params.MAX_NUMBER_OF_ITERATIONS : 100
   // At every loop if we improve the result then we apply serialize function to the result to save a copy
-  const serializeFunction = _.isFunction(params.serializeFunction) ? params.serializeFunction : _.cloneDeep
+  const serializeFunction = (typeof params.serializeFunction === 'function') ? params.serializeFunction : ((x) => JSON.parse(JSON.stringify(x)))
   // In the greedy queue we store all the elements in array in reverse order of execution
   const greedyQueue = [startingData]
   let bestGreedyQueue = []
@@ -27,7 +26,7 @@ async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFun
     })
     const n = greedyQueue.length
     for (let i = n - 1; i >= 0; i--) {
-      const {chosen, rejected} = await greedyAlgorithm(greedyQueue[i], _.flatten(greedyQueue.slice(0, i)))
+      const {chosen, rejected} = await greedyAlgorithm(greedyQueue[i], flatten(greedyQueue.slice(0, i)))
       iterationScore += chosen.length
       if (chosen.length !== 0) {
         greedyQueue[i] = chosen
@@ -51,11 +50,16 @@ async function iterativeGreedyAlgorithm (greedyAlgorithm, startingData, resetFun
       bestScore = iterationScore
       // There must be a better way to store the result
       // Plus the name is a bit tricky, one expects that the algorithm in it pass sets the elements
-      bestGreedyQueue = serializeFunction(_.flatten(greedyQueue))
+      bestGreedyQueue = serializeFunction(flatten(greedyQueue))
     }
-    if (iterationScore === _.sumBy(greedyQueue, 'length')) {
+    const greedyQueueLength = greedyQueue.reduce((length, array) => length + array.length, 0)
+    if (iterationScore === greedyQueueLength) {
       return bestGreedyQueue
     }
   }
   return bestGreedyQueue
+}
+
+function flatten (arrays) {
+  return arrays.reduce((a1, a2) => a1.concat(a2), [])
 }
